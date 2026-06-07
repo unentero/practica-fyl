@@ -55,6 +55,46 @@ defmodule Nivel2 do
     end
     #13. Realice un programa que calcule la sumatoria de las tres primeras
     # potencias (es decir el número, el número al cuadrado y al cubo) de un número dado.
-
+    def sumatoria_potencias(1), do: 3
+    def sumatoria_potencias(x), do: x + x*x + x*x*x
+    #14. Escriba una función que tome una lista y un elemento como argumentos, y devuelva la lista
+    #original con todas las ocurrencias de dicho elemento eliminadas.
+    def eliminar_ocurrencias(_,[]), do: []
+    def eliminar_ocurrencias(x,[x]), do: []
+    def eliminar_ocurrencias(x,[h|t]) do
+        if x == h do
+            eliminar_ocurrencias(x,t)
+        else
+            [h|eliminar_ocurrencias(x,t)]
+        end
+    end
+    #15. Escriba una función llamada "reemplazo", que tome una lista y dos elementos como argumentos,
+    #y devuelva la lista original con todas las instancias del primer elemento reemplazadas por el
+    #segundo.
+    def reemplazar_ocurrencias(_,_,[]), do: []
+    def reemplazar_ocurrencias(x,y,[x|t]), do: [y|reemplazar_ocurrencias(x,y,t)]
+    def reemplazar_ocurrencias(x,y,[h|t]), do: [h|reemplazar_ocurrencias(x,y,t)]
+    #16. Escriba una función que devuelva el mínimo elemento de una lista.
+    def minimo([x]), do: x
+    def minimo([h|t]) do
+        if h < minimo(t) do
+            h
+        else
+            minimo(t)
+        end
+    end
+    #17. Escriba una función que devuelva el máximo elemento de una lista.
+    def maximo([x]), do: x
+    def maximo([h|t]) do
+        if h > maximo(t) do
+            h
+        else
+            maximo(t)
+        end
+    end
+    #18. Defina una función que tome una lista de números y devuelva una 3-upla formada por el
+    #promedio, el máximo y el mínimo de la lista.
+    def ejercicio_18([]), do: {0,0,0}
+    def ejercicio_18(l), do: {media(l),maximo(l),minimo(l)}
 end
-IO.inspect(Nivel2.agregar_orden(3,[1,2,3,4,5]))
+IO.inspect(Nivel2.ejercicio_18([1,2,3,4,5]))

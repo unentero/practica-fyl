@@ -39,3 +39,25 @@ agregar_orden(X,[],L) :- L = [X].
 agregar_orden(X,[H|T],L):- L0 = [H|T], agregar_orden(X,T,L1),(X=<H -> L = [X|L0]; L = [H|L1]).
 %13- Realice un programa que calcule la sumatoria de las tres primeras
 %potencias (es decir el número, el número al cuadrado y al cubo) de un número dado.
+sumatoria_potencias(X,P):- P is X + X*X + X*X*X.
+%14- Escriba una función que tome una lista y un elemento como argumentos, y devuelva la lista
+%original con todas las ocurrencias de dicho elemento eliminadas.
+eliminar_ocurrencias(_,[],L) :- L = [].
+eliminar_ocurrencias(X,[X|T],L) :- eliminar_ocurrencias(X,T,L1),L = L1.
+eliminar_ocurrencias(X,[H|T],L) :- eliminar_ocurrencias(X,T,L1),L = [H|L1].
+%15- Escriba una función llamada "reemplazo", que tome una lista y dos elementos como argumentos,
+%y devuelva la lista original con todas las instancias del primer elemento reemplazadas por el
+%segundo.
+reemplazar_ocurrencias(_,_,[],L) :- L = [].
+reemplazar_ocurrencias(X,Y,[X|T],L) :- reemplazar_ocurrencias(X,Y,T,L1),L = [Y|L1].
+reemplazar_ocurrencias(X,Y,[H|T],L) :- reemplazar_ocurrencias(X,Y,T,L1),L = [H|L1].
+%16- Escriba una función que devuelva el mínimo elemento de una lista.
+minimo([X],MIN):- MIN is X.
+minimo([H|T],MIN):- minimo(T,MIN1),(H<MIN1 -> MIN is H; MIN is MIN1). 
+%17- Escriba una función que devuelva el máximo elemento de una lista.
+maximo([X],MAX):- MAX is X.
+maximo([H|T],MAX):- maximo(T,MAX1),(H>MAX1 -> MAX is H; MAX is MAX1).
+%18- Defina una función que tome una lista de números y devuelva una 3-upla formada por el
+%promedio, el máximo y el mínimo de la lista.
+ejercicio_18([],E):- E = [0,0,0].
+ejercicio_18(L,E):- media(L,M),maximo(L,MAX),minimo(L,MIN),E = [M,MAX,MIN].
