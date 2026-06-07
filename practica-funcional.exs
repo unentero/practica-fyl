@@ -18,7 +18,6 @@ end
 defmodule Nivel2 do
     #4- Defina una función que calcule la enésima potencia de un número.
     def enesimaPotencia(_,0), do: 1
-    def enesimaPotencia(x,1), do: x
     def enesimaPotencia(x,n), do: x*enesimaPotencia(x,n-1)
     #5- Escriba una función llamada “Cantidad” que devuelva la cantidad de elementos de una lista.
     def cantidad([]), do: 0
