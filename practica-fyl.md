@@ -62,7 +62,7 @@
     43. Escriba una función llamada “intercalar-según” que tome dos listas y una función como entrada, y construya una nueva lista resultado de intercalar las dos primeras en el orden establecido por la función (es decir, que la función se aplica a los dos elementos que se comparan en cada momento para determinar cuál es el mayor).
 
 ### Nivel 5 
-5.1 – Lógica compleja
+#### 5.1 – Lógica compleja
     44. Escriba una función que dada una lista de números y un número N, devuelva la lista resultante de eliminar los N números más cercanos al promedio de la lista de entrada. 
         Ej: si la lista es (1 6 34 2 3 55 4 1 12) y N = 5, el promedio es 13.1, 
         por lo cual se deberán eliminar los números 12, 6, 4, 3 y 2, y el resultado será (1 34 55 1).
