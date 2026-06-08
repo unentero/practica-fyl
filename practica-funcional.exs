@@ -1,4 +1,4 @@
-#-------------------------------Nivel1-----------------------------------
+#-------------------------------Nivel 1-----------------------------------
 defmodule Nivel1 do
     #1- Defina una función que calcule el cuadrado de un número
     def square(0), do: 0
@@ -14,7 +14,7 @@ defmodule Nivel1 do
     #3- Defina una función que realice el siguiente cálculo, para el parámetro n: F(n) = n * (n - 1) / 2.
     def funcionx(n), do: n*(n-1)/2
 end
-#-------------------------------Nivel2-----------------------------------
+#-------------------------------Nivel 2-----------------------------------
 defmodule Nivel2 do
     #4- Defina una función que calcule la enésima potencia de un número.
     def enesimaPotencia(_,0), do: 1
@@ -97,4 +97,98 @@ defmodule Nivel2 do
     def ejercicio_18([]), do: {0,0,0}
     def ejercicio_18(l), do: {media(l),maximo(l),minimo(l)}
 end
-IO.inspect(Nivel2.ejercicio_18([1,2,3,4,5]))
+#-------------------------------Nivel 3-----------------------------------
+defmodule Nivel3 do
+    #19. Escriba una función que calcule el i-ésimo número perfecto (los números perfectos son
+    # aquellos que son iguales a la suma de sus divisores).
+    def lista_divisores(_,0), do: []
+    def lista_divisores(x,n) do
+        if rem(x,n) == 0 do
+            [n|lista_divisores(x,n-1)]
+        else
+            lista_divisores(x,n-1)
+        end
+    end
+    def sumatoria([]), do: 0
+    def sumatoria([h|t]), do: h + sumatoria(t)
+    def es_numero_perfecto(x), do: x == sumatoria(lista_divisores(x,x-1))
+    def iesimo_perfecto_desde(x,i) do
+        cond do
+            i==1 and es_numero_perfecto(x) -> x
+            es_numero_perfecto(x) -> iesimo_perfecto_desde(x+1,i-1)
+            true -> iesimo_perfecto_desde(x+1,i)
+        end
+    end
+    def iesimo_perfecto(i), do: iesimo_perfecto_desde(1,i)
+    #20. Escriba una función que calcule los n primeros números primos y los devuelva en una lista.
+    def lista_n_divisores_primos(_,0), do: []
+    def lista_n_divisores_primos(1,_), do: [1]
+    def lista_n_divisores_primos(x,n) do
+        if rem(x,n)==0 and x != n and n != 1 do
+            [n|lista_n_divisores_primos(x,n-1)]
+        else
+            lista_n_divisores_primos(x,n-1)
+        end
+    end
+    def es_primo(x), do: lista_n_divisores_primos(x,x) == []
+    def lista_n_primos_desde(_,0), do: []
+    def lista_n_primos_desde(x,n) do
+        if es_primo(x) do
+            [x|lista_n_primos_desde(x+1,n-1)]
+        else
+            lista_n_primos_desde(x+1,n)
+        end
+    end
+    def lista_n_primos(n), do: lista_n_primos_desde(1,n)
+    #21. Escriba una función que determine la Varianza de una lista de números:
+    #Varianza = Sumatoria (Xi - Media)2 / (n - 1). Siendo Xi cada uno de los n elementos de la lista.
+    def cantidad([]), do: 0
+    def cantidad([_|t]), do: 1 + cantidad(t)
+    def media([]), do: 0
+    def media(l), do: sumatoria(l)/cantidad(l)
+    def sumatoria_varianza([]), do: 0
+    def sumatoria_varianza([h|t]=l), do: (h - media(l))**2 + sumatoria_varianza(t)
+    def varianza(l), do: sumatoria_varianza(l)/(cantidad(l)-1)
+    #22. Escriba una función que calcule la Moda de una lista de números
+    #(el número que más se repite).
+    def contar_instancias_de(_,[]), do: 0
+    def contar_instancias_de(x,[x|t]), do: 1 + contar_instancias_de(x,t)
+    def contar_instancias_de(x,[_|t]), do: contar_instancias_de(x,t)
+    def mas_repetido([],m,_), do: m #si la lista de valores esta vacía, m es la moda de la lista de comparacion
+    def mas_repetido([h|t],m,l) do #si la lista de valores NO esta vacia, comparamos
+        cond do
+            contar_instancias_de(h,l) > contar_instancias_de(m,l) -> mas_repetido(t,h,l) #recursivamente vamos quitando valores de lista de entrada, pero mantenemos una copia con la q comparamos uno a uno
+            true -> mas_repetido(t,m,l) #si la cabeza de la lista de entrada tiene menos repeticiones que la moda actual m, entonces recursivamente decrecemos la lista
+        end
+    end
+    def moda([h|t]), do: mas_repetido(t,h,[h|t])
+    #23. Devuelva la cantidad de números que contiene una lista.
+    def cantidad_numeros_en([]), do: 0
+    def cantidad_numeros_en([h|t]) do
+        if is_number(h) do
+            1 + cantidad_numeros_en(t)
+        else
+            cantidad_numeros_en(t)
+        end
+    end
+    #24. Realice una función que transforme un binario, expresado a través de una lista de {0,1},
+    #en decimal.
+    def tamanio([]), do: 0
+    def tamanio([_|t]), do: 1 + tamanio(t)
+    def binario_a_decimal([]), do: 0
+    def binario_a_decimal([h|t]), do: h*(2**(tamanio(t))) + binario_a_decimal(t)
+    #25. Realice una función que sume dos números binarios, expresados a través de dos listas de {0,1}.
+    def suma_binaria([],[],0), do: []
+    def suma_binaria([],[],1), do: [1]
+    def suma_binaria([1|t1],[1|t2],1), do: [1|suma_binaria(t1,t2,1)]
+    def suma_binaria([1|t1],[1|t2],0), do: [0|suma_binaria(t1,t2,1)]
+    def suma_binaria([1|t1],[0|t2],1), do: [0|suma_binaria(t1,t2,1)]
+    def suma_binaria([1|t1],[0|t2],0), do: [1|suma_binaria(t1,t2,0)]
+    def suma_binaria([0|t1],[1|t2],1), do: [0|suma_binaria(t1,t2,1)]
+    def suma_binaria([0|t1],[1|t2],0), do: [1|suma_binaria(t1,t2,0)]
+    def suma_binaria([0|t1],[0|t2],1), do: [1|suma_binaria(t1,t2,0)]
+    def suma_binaria([0|t1],[0|t2],0), do: [0|suma_binaria(t1,t2,0)]
+    def suma_binaria_definitiva(l1,l2), do: Enum.reverse(suma_binaria(Enum.reverse(l1),Enum.reverse(l2),0))
+
+end
+IO.inspect(Nivel3.suma_binaria_definitiva([1,0,1,0],[0,1,0,1]))

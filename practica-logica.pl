@@ -61,3 +61,20 @@ maximo([H|T],MAX):- maximo(T,MAX1),(H>MAX1 -> MAX is H; MAX is MAX1).
 %promedio, el máximo y el mínimo de la lista.
 ejercicio_18([],E):- E = [0,0,0].
 ejercicio_18(L,E):- media(L,M),maximo(L,MAX),minimo(L,MIN),E = [M,MAX,MIN].
+%-------------------------------Nivel 3-----------------------------------
+%19. Escriba una función que calcule el i-ésimo número perfecto (los números perfectos son aquellos 
+%que son iguales a la suma de sus divisores).
+
+%20. Escriba una función que calcule los n primeros números primos y los devuelva en una lista.
+
+%21. Escriba una función que determine la Varianza de una lista de números: 
+%Varianza = Sumatoria (Xi - Media)2 / (n - 1). Siendo Xi cada uno de los n elementos de la lista.
+
+%22. Escriba una función que calcule la Moda de una lista de números (el número que más se repite).
+
+%23. Devuelva la cantidad de números que contiene una lista.
+
+%24. Realice una función que transforme un binario, expresado a través de una lista de {0,1}, 
+%en decimal.
+
+%25. Realice una función que sume dos números binarios, expresados a través de dos listas de {0,1}.

@@ -21,7 +21,7 @@
     18. Defina una función que tome una lista de números y devuelva una 3-upla formada por el promedio, el máximo y el mínimo de la lista. 
 
 ### Nivel 3
-    19. Escriba una función que calcule el i-ésimo número perfecto (los números perfectos son aquellos que son iguales a la suma de sus divisores.
+    19. Escriba una función que calcule el i-ésimo número perfecto (los números perfectos son aquellos que son iguales a la suma de sus divisores).
     20. Escriba una función que calcule los n primeros números primos y los devuelva en una lista.
     21. Escriba una función que determine la Varianza de una lista de números: Varianza = Sumatoria (Xi - Media)2 / (n - 1). Siendo Xi cada uno de los n elementos de la lista.
     22. Escriba una función que calcule la Moda de una lista de números (el número que más se repite).
