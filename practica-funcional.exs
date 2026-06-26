@@ -189,6 +189,131 @@ defmodule Nivel3 do
     def suma_binaria([0|t1],[0|t2],1), do: [1|suma_binaria(t1,t2,0)]
     def suma_binaria([0|t1],[0|t2],0), do: [0|suma_binaria(t1,t2,0)]
     def suma_binaria_definitiva(l1,l2), do: Enum.reverse(suma_binaria(Enum.reverse(l1),Enum.reverse(l2),0))
-
+    #26. Realice una función que transforme un entero decimal a binario, expresado como lista de {0,1}.
+    def decimal_a_binario(0), do: []
+    def decimal_a_binario(n), do: [rem(n,2)|decimal_a_binario(div(n,2))]
+    #27. Escriba una función llamada “Palíndromo” que indique si una lista es Palíndromo (capicúa).
+    def listas_iguales([],[]), do: true
+    def listas_iguales([h1|t1],[h2|t2]) do
+        cond do
+            h1 == h2 and listas_iguales(t1,t2)->true
+            h1 != h2 -> false
+        end
+    end
+    def palindromo(l), do: listas_iguales(l,Enum.reverse(l))
+    #28. Escriba una función que determine si una lista de {0,1}, donde cada 0 representa un
+    #paréntesis que abre y cada 1 un paréntesis que cierra, está balanceada (es decir, que cada 0
+    #tiene su 1 correspondiente de acuerdo a las reglas que siguen los paréntesis). Ej: (001101)
+    #está balanceada y (1001010) no lo está.
+    def parentesis_balanceados_bin([]), do: true
+    def parentesis_balanceados_bin(l), do: contar_instancias_de(1,l) == contar_instancias_de(0,l)
+    #29. Defina una función que tome como entrada una lista de números entre el 1 y el 3, y devuelva
+    #un par ordenado con el número que mayor cantidad de veces aparece en la lista original y su frecuencia.
+    def funcion_29(l), do: [moda(l),contar_instancias_de(moda(l),l)]
+    #30. Realice un programa que, dado un número N, calcule el mayor valor de la serie de Fibonacci que sea
+    #menor que N. La serie está dada por: 0, 1, 1, 2, 3, 5, 8, 13, ... ; donde los  primeros números son 0 y 1,
+    #y los demás se calculan como la suma de los dos anteriores.
+    def fibonacci(0), do: 0
+    def fibonacci(1), do: 1
+    def fibonacci(n) when n > 1, do: fibonacci(n-2) + fibonacci(n-1)
+    def fibonacci_hasta(x,n) do
+        cond do
+            fibonacci(n) > x -> fibonacci_hasta(x,n-1)
+            fibonacci(n) < x -> fibonacci(n)
+            fibonacci(n) == x -> fibonacci(n-1)
+        end
+    end
+    def fibonacci_menor_a(n), do: fibonacci_hasta(n,n)
+    #31. Escriba una función llamada “intercalar” que intercale dos listas ordenadas manteniendo el orden
+    #definido por las mismas.
+    def intercalar([],[]), do: []
+    def intercalar([h1|t1],[h2|t2]), do: [h1,h2|intercalar(t1,t2)]
+    #32. Escriba una función que tome una lista y elimine las repeticiones adyacentes de sus elementos.
+    def eliminar_adyacentes_de([]), do: []
+    def eliminar_adyacentes_de([x]), do: [x]
+    def eliminar_adyacentes_de([x,x|t]), do: eliminar_adyacentes_de([x|t])
+    def eliminar_adyacentes_de([h|t]), do: [h|eliminar_adyacentes_de(t)]
+    #33. Escriba una función que tome un número y una lista conteniendo los coeficientes de un polinomio y
+    #devuelva el resultado del mismo reemplazando el número por la variable:
+    #Ej. para (2 5 4 50 3) y 3 el polinomio en x es  2 + 5 x + 4 x2 + 50 x3 + 3 x4 ,  donde x=3.
+    def evaluar_polinomio(_,[]), do: 0
+    def evaluar_polinomio(x,[h|t]), do: h*(x**(tamanio(t))) + evaluar_polinomio(x,t)
+    def evaluar_polinomio_final(x,l), do: evaluar_polinomio(x,Enum.reverse(l))
+    #34. Dadas dos listas de números defina una función devuelva una tercera, cuyos elementos sean resultado
+    #    del siguiente cálculo:
+    #    Parámetros: L1, L2 listas de números.
+    #    Resultado: L3 lista de números
+    #    L3(1) = L1(1)*L2(1) + L1(1)*L2(2) + ... + L1(1)*L2(N)
+    #    L3(2) = L1(2)*L2(1) + L1(2)*L2(2) + ... + L1(2)*L2(N)
+    #    . . . .
+    #    L3(M) = L1(M)*L2(1) + L1(M)*L2(2) + ... + L1(M)*L2(N)
+    def escalar_vector(_,[]), do: 0
+    def escalar_vector(x,[h|t]), do: x*h + escalar_vector(x,t)
+    def vector_escalar_vec([],_), do: []
+    def vector_escalar_vec([h1|t1],l2), do: [escalar_vector(h1,l2)|vector_escalar_vec(t1,l2)]
+    #35. Considere que cada conjunto se representa mediante una lista. Defina funciones para simular:
+    def pertenece(_,[]), do: false
+    def pertenece(x,[x|_]), do: true
+    def pertenece(x,[h|t]) when x != h, do: pertenece(x,t)
+    #a. Unión de conjuntos.
+    def union([],[]), do: []
+    def union([],l), do: l
+    def union([h1|t1],[h2|t2]) do
+        cond do
+            h1 != h2 -> [h1,h2|union(t1,t2)]
+            h1 == h2 -> [h1|union(t1,t2)]
+        end
+    end
+    #b. Intersección de conjuntos.
+    def interseccion([],_), do: []
+    def interseccion([h1|t1],l2) do
+        cond do
+            pertenece(h1,l2) -> [h1|interseccion(t1,l2)]
+            true -> interseccion(t1,l2)
+        end
+    end
+    #c. Diferencia de conjuntos.
+    def diferencia([],_), do: []
+    def diferencia([h1|t1],l2) do
+        cond do
+            not(pertenece(h1,l2)) -> [h1|diferencia(t1,l2)]
+            true -> diferencia(t1,l2)
+        end
+    end
+    #d. Diferencia simétrica de conjuntos.
+    def diferencia_simetrica([],[]), do: []
+    def diferencia_simetrica(l,[]), do: l
+    def diferencia_simetrica([h1|t1],[h2|t2]), do: diferencia(union([h1|t1],[h2|t2]),interseccion([h1|t1],[h2|t2]))
+    #36. Escriba una función que tome una lista como entrada y genere una nueva lista con la primera mitad de
+    #la lista original como segundo elemento y la segunda mitad como primer elemento.
+    #    (x1, x2, x3, x4, x5, x6)  -->  ( (x4, x5, x6), (x1, x2, x3) ).
+    def recortar_lista_hasta([],_), do: []
+    def recortar_lista_hasta(_,0), do: []
+    def recortar_lista_hasta([h|t],n), do: [h|recortar_lista_hasta(t,n-1)]
+    def biparticion_rara(l), do: [Enum.reverse(recortar_lista_hasta(Enum.reverse(l),div(tamanio(l)+1,2))),recortar_lista_hasta(l,div(tamanio(l),2))]
+    #37. Escriba una función que tome dos listas y determine si la secuencia de elementos de la primera se
+    #encuentra dentro de la segunda.
+    def empieza_con([],_), do: true
+    def empieza_con([h1|t1],[h2|t2]) do
+        cond do
+            h1 != h2 -> false
+            h1 == h2 -> empieza_con(t1,t2)
+        end
+    end
+    def sublista(_,[]), do: false
+    def sublista([h1|t1],[h2|t2]) do
+        cond do
+            h1 != h2 -> empieza_con([h1|t1],t2)
+            h1 == h2 -> empieza_con(t1,t2)
+        end
+    end
+    #38. Escriba una función que tome como entrada tres listas y determine si la tercera se puede formar a
+    #partir de los elementos de las dos primeras.
+    def is_lineal_combination(_,_,[]), do: true
+    def is_lineal_combination(l1,l2,[h3|t3]) do
+        cond do
+        pertenece(h3,l1) or pertenece(h3,l2) -> is_lineal_combination(l1,l2,t3)
+        true -> false
+        end
+    end
 end
-IO.inspect(Nivel3.suma_binaria_definitiva([1,0,1,0],[0,1,0,1]))
