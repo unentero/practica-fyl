@@ -317,3 +317,50 @@ defmodule Nivel3 do
         end
     end
 end
+defmodule Nivel4 do
+    #39. Escriba una función llamada "Cantidad-de" que toma como argumentos una lista y una condición (función),
+    #y  devuelve la cantidad de elementos de la lista que cumplen con dicha condición.
+    def cantidad_de([],_condicion), do: 0
+    def cantidad_de([h|t],condicion) do
+        cond do
+            condicion.(h) -> 1 + cantidad_de(t,condicion)
+            true -> cantidad_de(t,condicion)
+        end
+    end
+    #40. Defina una función que tome una lista de números y una condición (función) como parámetros y devuelva
+    #la sumatoria de los elementos que cumplen dicha condición.
+    def sumatoria_de([],_condicion), do: 0
+    def sumatoria_de([h|t],condicion) do
+        cond do
+            condicion.(h) -> h + sumatoria_de(t,condicion)
+            true -> sumatoria_de(t,condicion)
+        end
+    end
+    #41. Defina una función llamada “Select” que devuelva la lista de elementos que cumplen con una determinada
+    #condición.
+    def select([],_condicion), do: []
+    def select([h|t],condicion) do
+        cond do
+            condicion.(h) -> [h|select(t,condicion)]
+            true -> select(t,condicion)
+        end
+    end
+    #42. Defina una función llamada “Map” o “Collect” que devuelva la lista de los resultados de aplicar una
+    #función que se pasa como parámetro a cada elemento de la lista de entrada.
+    def map([],_f), do: []
+    def map([h|t],f), do: [f.(h)|map(t,f)]
+    #43. Escriba una función llamada “intercalar-según” que tome dos listas y una función como entrada, y
+    #construya una nueva lista resultado de intercalar las dos primeras en el orden establecido por la función
+    #(es decir, que la función se aplica a los dos elementos que se comparan en cada momento para determinar cuál es el mayor).
+    def intercalar_segun([],[],_f), do: []
+    def intercalar_segun([],l2,_f), do: l2
+    def intercalar_segun(l1,[],_f), do: l1
+    def intercalar_segun([h1|t1],[h2|t2],f) do
+        cond do
+            f.(h1) > f.(h2)-> [h1,h2|intercalar_segun(t1,t2,f)]
+            f.(h1) < f.(h2)-> [h2,h1|intercalar_segun(t1,t2,f)]
+            true -> [h1,h2|intercalar_segun(t1,t2,f)]
+        end
+    end
+end
+IO.inspect(Nivel4.intercalar_segun([1,2,3,4,5,6], fn x-> rem(x,2) end))

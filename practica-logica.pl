@@ -208,3 +208,31 @@ sublista([H1|T1],[H2|T2]):- (H1 =\= H2 -> empieza_con([H1|T1],T2);H1 =:= H2 -> e
 %partir de los elementos de las dos primeras.
 is_lineal_combination(_,_,[]).
 is_lineal_combination(L1,L2,[H3|T3]):-(pertenece(H3,L1);pertenece(H3,L2)->is_lineal_combination(L1,L2,T3)).
+%-------------------------------Nivel 4-----------------------------------
+%39. Escriba una función llamada "Cantidad-de" que toma como argumentos una lista y una condición (función), 
+%y  devuelve la cantidad de elementos de la lista que cumplen con dicha condición.
+cantidad_de([],_Condicion,0).
+cantidad_de([H|T],Condicion,R):-(call(Condicion,H)-> cantidad_de(T,Condicion,R1),R is 1 + R1 ; cantidad_de(T,Condicion,R)).
+even(N):- N mod 2 =:= 0.
+%40. Defina una función que tome una lista de números y una condición (función) como parámetros y devuelva 
+%la sumatoria de los elementos que cumplen dicha condición.
+sumatoria_de([],_Condicion,0).
+sumatoria_de([H|T],Condicion,R):-(call(Condicion,H)-> sumatoria_de(T,Condicion,R1),R is H + R1 ; sumatoria_de(T,Condicion,R)).
+%41. Defina una función llamada “Select” que devuelva la lista de elementos que cumplen con una determinada 
+%condición. 
+select([],_Condicion,[]).
+select([H|T],Condicion,R):-(call(Condicion,H)-> select(T,Condicion,R1),R = [H|R1] ; select(T,Condicion,R)).
+%42. Defina una función llamada “Map” o “Collect” que devuelva la lista de los resultados de aplicar una 
+%función que se pasa como parámetro a cada elemento de la lista de entrada. 
+map([],_,[]).
+map([H|T],Funcion,R):- map(T,Funcion,R1),call(Funcion,H,Hf),R=[Hf|R1].
+sumar(X,Y):-Y is X+1.
+%43. Escriba una función llamada “intercalar-según” que tome dos listas y una función como entrada, y 
+%construya una nueva lista resultado de intercalar las dos primeras en el orden establecido por la función 
+%(es decir, que la función se aplica a los dos elementos que se comparan en cada momento para determinar cuál es el mayor).
+intercalar_segun([],[],_,[]).
+intercalar_segun([H1|T1],[H2|T2],Func,R):-(call(Func,H1,H1f),call(Func,H2,H2f),H1f > H2f -> 
+intercalar_segun(T1,T2,Func,R1), R=[H1,H2|R1];
+call(Func,H1,H1f),call(Func,H2,H2f),H1f < H2f->
+intercalar_segun(T1,T2,Func,R1), R=[H2,H1|R1];
+intercalar_segun(T1,T2,Func,R1), R=[H1,H2|R1]).
